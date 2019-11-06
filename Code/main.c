@@ -11,6 +11,7 @@ int main(void) {
     int xco, yco;
     char action;
     int won;
+    int flaggedMines = 0;
 
     GameElement game[X_DIM][Y_DIM];
     createGame(game, NUM_MINES);
@@ -20,12 +21,14 @@ int main(void) {
     while(continue_game) {
         printGame(game);
         getUserInput(&xco, &yco, &action);
-        /*if(action == 'c')
-            clearBlock();
-        else if(action == 'f')
-            flagBlock();*/
-        continue_game = 0;
-        won = 0;
+        if(action == 'c')
+            clearBlock(&game[xco][yco], &continue_game, &won);
+        else //if(action == 'f')
+            flagBlock(&game[xco][yco], &flaggedMines);
+        if(flaggedMines == NUM_MINES) {
+            won = 1;
+            continue_game = 0;
+        }
     }
     endTime = time(NULL);
 

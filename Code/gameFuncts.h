@@ -98,4 +98,25 @@ void getUserInput(int* xco, int* yco, char* act);
  */
 void printLosingMessage();
 
+
+/** ----------------------------------------------------------
+ * @fn clearBlock()
+ * @brief clears selected block, loses game if its a mine
+ * @param gameBlock, selected game element
+ * @param contGame, game status, set to 0 if mine is hit
+ * @param won, updated to 0 if mine is hit
+ * ----------------------------------------------------------
+ */
+void clearBlock(GameElement* gameBlock, int* contGame, int* won);
+
+
+/** ----------------------------------------------------------
+ * @fn flagBlock()
+ * @brief flags selected block as suspected mine
+ * @param gameBlock, selected game element
+ * @param flagct, flag count, updated if actual mine is flagged
+ * ----------------------------------------------------------
+ */
+void flagBlock(GameElement* gameBlock, int* flagct);
+
 #endif //MINESWEEPER_GAMEFUNCTS_H

@@ -16,12 +16,12 @@ void printGame(GameElement game[X_DIM][Y_DIM]) {
     for(int i = 0; i < X_DIM; ++i) {
         printf("%d | ", i);
         for(int j = 0; j < Y_DIM; ++j) {
-            if(!game[i][j].isCleared)
-                printf("|_| ");
+            if(game[i][j].isCleared)
+                printf("|%d| ", game[i][j].amountTouching);
             else if(game[i][j].isFlagged)
                 printf("|!| ");
             else
-                printf("|%d| ", game[i][j].amountTouching);
+                printf("|_| ");
         }
         printf("|\n");
     }
@@ -218,7 +218,7 @@ void setMinesTouching(GameElement game[X_DIM][Y_DIM]) {
 void getUserInput(int* xco, int* yco, char* act) {
     printf("Actions: clear (c), or flag (f)\n");
     printf("Enter a vertical coordinate, horizontal coordinate, and action seperated by spaces:\n");
-    scanf("%d %d  %c", xco, yco, act);
+    scanf("%d %d  %c", yco, xco, act);
 }
 
 
@@ -231,4 +231,34 @@ void printLosingMessage() {
     printf("BOOM!\nYou hit a mine and died!\n");
     printf("\"Landmines have taken my sight, taken my speech, taken my hearing,\ntaken my arms, taken my legs, taken my soul...\"\n- James Hetfield\n");
     printf("\nYou lose\n");
+}
+
+
+/** ----------------------------------------------------------
+ * @fn clearBlock()
+ * @brief clears selected block, loses game if its a mine
+ * @param gameBlock, selected game element
+ * @param contGame, game status, set to 0 if mine is hit
+ * @param won, updated to 0 if mine is hit
+ * ----------------------------------------------------------
+ */
+void clearBlock(GameElement* gameBlock, int* contGame, int* won) {
+    if(gameBlock->isMine) {
+        contGame = 0;
+        won = 0;
+    } else gameBlock->isCleared = 1;
+}
+
+
+/** ----------------------------------------------------------
+ * @fn flagBlock()
+ * @brief flags selected block as suspected mine
+ * @param gameBlock, selected game element
+ * @param flagct, flag count, updated if actual mine is flagged
+ * ----------------------------------------------------------
+ */
+void flagBlock(GameElement* gameBlock, int* flagct) {
+    gameBlock->isFlagged = 1;
+    if (gameBlock->isMine)
+        ++flagct;
 }
