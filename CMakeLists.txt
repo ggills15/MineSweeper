@@ -17,8 +17,8 @@ set(SDIR Code/)
 # List all files that are required to compile your project
 set(SOURCE_FILES
         ${SDIR}main.c
-        #${SDIR}pa4functs.c
-        #${SDIR}pa4main.c
+        ${SDIR}gameFuncts.c
+        ${SDIR}gameFuncts.h
         #${SDIR}lab33.c
         #${SDIR}lab33.h
         )
