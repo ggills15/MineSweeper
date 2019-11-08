@@ -34,10 +34,9 @@ void printGame(GameElement game[X_DIM][Y_DIM]);
  * @fn createGame()
  * @brief creates the game matrix
  * @param game, game matrix
- * @param numMines, number of mines in the game
  * ----------------------------------------------------------
  */
-void createGame(GameElement game[X_DIM][Y_DIM], int numMines);
+void createGame(GameElement game[][Y_DIM]);
 
 
 /** ----------------------------------------------------------
@@ -46,7 +45,7 @@ void createGame(GameElement game[X_DIM][Y_DIM], int numMines);
  * @param game, game matrix
  * ----------------------------------------------------------
  */
-void initializeGame(GameElement game[X_DIM][Y_DIM]);
+void initializeGame(GameElement game[][Y_DIM]);
 
 
 /** ----------------------------------------------------------
@@ -56,7 +55,7 @@ void initializeGame(GameElement game[X_DIM][Y_DIM]);
  * @param numMines, number of mines in the game to set
  * ----------------------------------------------------------
  */
-void setMines(GameElement game[X_DIM][Y_DIM], int numMines);
+void setMines(GameElement game[][Y_DIM], int numMines);
 
 
 /** ----------------------------------------------------------

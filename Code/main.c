@@ -6,17 +6,20 @@
 
 int main(void) {
     srand(time(0));
-    int continue_game = 1;
+    /*int continue_game = 1;
     time_t startTime, endTime;
     int xco, yco;
     char action;
     int won;
-    int flaggedMines = 0;
+    int flaggedMines = 0;*/
 
+    //GameElement ***game = createGame();
+    //GameElement **game = malloc(sizeof(GameElement) * X_DIM * Y_DIM);
     GameElement game[X_DIM][Y_DIM];
-    createGame(game, NUM_MINES);
-    //printGame(game);
+    createGame(game);
+    printGame(game);
 
+    /*
     startTime = time(NULL);
     while(continue_game) {
         printGame(game);
@@ -35,6 +38,6 @@ int main(void) {
     if(won) {
 
     } else printLosingMessage();
-
+*/
     return 0;
 }

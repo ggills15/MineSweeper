@@ -33,12 +33,11 @@ void printGame(GameElement game[X_DIM][Y_DIM]) {
  * @fn createGame()
  * @brief creates the game matrix
  * @param game, game matrix
- * @param numMines, number of mines in the game
  * ----------------------------------------------------------
  */
-void createGame(GameElement game[X_DIM][Y_DIM], int numMines) {
+void createGame(GameElement game[][Y_DIM]) {    //FIXME: pointer issue, setMines() will set mines in main scope but not in createGame() scope
     initializeGame(game);
-    setMines(game, numMines);
+    setMines(game, NUM_MINES);
     setMinesTouching(game);
 }
 
@@ -49,7 +48,7 @@ void createGame(GameElement game[X_DIM][Y_DIM], int numMines) {
  * @param game, game matrix
  * ----------------------------------------------------------
  */
-void initializeGame(GameElement game[X_DIM][Y_DIM]) {
+void initializeGame(GameElement game[][Y_DIM]) {
     for(int i = 0; i < X_DIM; ++i) {
         for(int j = 0; j < Y_DIM; ++j) {
             game[i][j].isMine = 0;
@@ -68,13 +67,19 @@ void initializeGame(GameElement game[X_DIM][Y_DIM]) {
  * @param numMines, number of mines in the game to set
  * ----------------------------------------------------------
  */
-void setMines(GameElement game[X_DIM][Y_DIM], int numMines) {
+void setMines(GameElement game[][Y_DIM], int numMines) {
     int x,y;
 
     for(int i = 0; i < numMines; ++i) {
         x = rand() % X_DIM;
         y = rand() % Y_DIM;
         game[x][y].isMine = 1;
+    }
+    for(int i = 0; i < X_DIM; ++i) {
+        for(int j = 0; j < Y_DIM; ++j) {
+            printf("%d ", game[i][j].isMine);
+        }
+        printf("\n");
     }
 }
 
