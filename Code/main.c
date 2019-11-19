@@ -15,8 +15,6 @@ int main(void) {
 
     GameElement game[X_DIM][Y_DIM];
     createGame(game);
-    printGame(game);
-
 
     startTime = time(NULL);
     while(continue_game) {

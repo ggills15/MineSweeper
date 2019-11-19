@@ -73,7 +73,10 @@ void setMines(GameElement game[][Y_DIM], int numMines) {
     for(int i = 0; i < numMines; ++i) {
         x = rand() % X_DIM;
         y = rand() % Y_DIM;
-        game[x][y].isMine = 1;
+        if(game[x][y].isMine)
+            --i;
+        else
+            game[x][y].isMine = 1;
     }
     for(int i = 0; i < X_DIM; ++i) {
         for(int j = 0; j < Y_DIM; ++j) {
@@ -113,104 +116,6 @@ int countTouchingMines(GameElement game[X_DIM][Y_DIM], int xVal, int yVal) {
     if(game[xVal + 1][yVal + 1].isMine && (xVal + 1) < X_DIM && (yVal + 1) < Y_DIM)
         ++count;
 
-    /*if(xVal == 0 && yVal == 0) {
-        if(game[xVal + 1][yVal].isMine)
-            ++count;
-        if(game[xVal][yVal + 1].isMine)
-            ++count;
-        if(game[xVal + 1][yVal + 1].isMine)
-            ++count;
-    }
-    else if(xVal == X_DIM - 1 && yVal == Y_DIM - 1) {
-        if(game[xVal - 1][yVal].isMine)
-            ++count;
-        if(game[xVal][yVal - 1].isMine)
-            ++count;
-        if(game[xVal - 1][yVal - 1].isMine)
-            ++count;
-    }
-    else if(xVal == 0 && yVal == Y_DIM - 1) {
-        if(game[xVal + 1][yVal].isMine)
-            ++count;
-        if(game[xVal][yVal - 1].isMine)
-            ++count;
-        if(game[xVal + 1][yVal - 1].isMine)
-            ++count;
-    }
-    else if(xVal == X_DIM - 1 && yVal == 0) {
-        if(game[xVal - 1][yVal].isMine)
-            ++count;
-        if(game[xVal][yVal + 1].isMine)
-            ++count;
-        if(game[xVal - 1][yVal + 1].isMine)
-            ++count;
-    }
-    else if(xVal == 0) {
-        if(game[xVal + 1][yVal].isMine)
-            ++count;
-        if(game[xVal][yVal + 1].isMine)
-            ++count;
-        if(game[xVal + 1][yVal + 1].isMine)
-            ++count;
-        if(game[xVal][yVal - 1].isMine)
-            ++count;
-        if(game[xVal + 1][yVal - 1].isMine)
-            ++count;
-    }
-    else if(xVal == X_DIM - 1) {
-        if(game[xVal - 1][yVal].isMine)
-            ++count;
-        if(game[xVal][yVal + 1].isMine)
-            ++count;
-        if(game[xVal - 1][yVal + 1].isMine)
-            ++count;
-        if(game[xVal][yVal - 1].isMine)
-            ++count;
-        if(game[xVal - 1][yVal - 1].isMine)
-            ++count;
-    }
-    else if(yVal == 0) {
-        if(game[xVal + 1][yVal].isMine)
-            ++count;
-        if(game[xVal][yVal + 1].isMine)
-            ++count;
-        if(game[xVal + 1][yVal + 1].isMine)
-            ++count;
-        if(game[xVal - 1][yVal].isMine)
-            ++count;
-        if(game[xVal - 1][yVal].isMine)
-            ++count;
-    }
-    else if(yVal == Y_DIM - 1) {
-        if(game[xVal - 1][yVal].isMine)
-            ++count;
-        if(game[xVal + 1][yVal].isMine)
-            ++count;
-        if(game[xVal][yVal - 1].isMine)
-            ++count;
-        if(game[xVal + 1][yVal - 1].isMine)
-            ++count;
-        if(game[xVal - 1][yVal - 1].isMine)
-            ++count;
-    }
-    else { //finally
-        if(game[xVal][yVal + 1].isMine)
-            ++count;
-        if(game[xVal][yVal - 1].isMine)
-            ++count;
-        if(game[xVal + 1][yVal + 1].isMine)
-            ++count;
-        if(game[xVal + 1][yVal - 1].isMine)
-            ++count;
-        if(game[xVal + 1][yVal].isMine)
-            ++count;
-        if(game[xVal - 1][yVal + 1].isMine)
-            ++count;
-        if(game[xVal - 1][yVal - 1].isMine)
-            ++count;
-        if(game[xVal - 1][yVal].isMine)
-            ++count;
-    }*/
     return count;
 }
 
