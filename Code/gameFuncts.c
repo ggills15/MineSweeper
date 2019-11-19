@@ -95,7 +95,25 @@ void setMines(GameElement game[][Y_DIM], int numMines) {
  */
 int countTouchingMines(GameElement game[X_DIM][Y_DIM], int xVal, int yVal) {
     int count = 0;
-    if(xVal == 0 && yVal == 0) {
+
+    if(game[xVal - 1][yVal - 1].isMine && (xVal - 1) >= 0 && (yVal - 1) >= 0)
+        ++count;
+    if(game[xVal - 1][yVal].isMine && (xVal - 1) >= 0)
+        ++count;
+    if(game[xVal - 1][yVal + 1].isMine && (xVal - 1) >= 0 && (yVal + 1) < Y_DIM)
+        ++count;
+    if(game[xVal][yVal - 1].isMine && (yVal - 1) >= 0)
+        ++count;
+    if(game[xVal][yVal + 1].isMine && (yVal + 1) < Y_DIM)
+        ++count;
+    if(game[xVal + 1][yVal - 1].isMine && (xVal + 1) < X_DIM && (yVal - 1) >= 0)
+        ++count;
+    if(game[xVal + 1][yVal].isMine && (xVal + 1) < X_DIM)
+        ++count;
+    if(game[xVal + 1][yVal + 1].isMine && (xVal + 1) < X_DIM && (yVal + 1) < Y_DIM)
+        ++count;
+
+    /*if(xVal == 0 && yVal == 0) {
         if(game[xVal + 1][yVal].isMine)
             ++count;
         if(game[xVal][yVal + 1].isMine)
@@ -192,7 +210,7 @@ int countTouchingMines(GameElement game[X_DIM][Y_DIM], int xVal, int yVal) {
             ++count;
         if(game[xVal - 1][yVal].isMine)
             ++count;
-    }
+    }*/
     return count;
 }
 
@@ -249,8 +267,8 @@ void printLosingMessage() {
  */
 void clearBlock(GameElement* gameBlock, int* contGame, int* won) {
     if(gameBlock->isMine) {
-        contGame = 0;
-        won = 0;
+        *contGame = 0;
+        *won = 0;
     } else gameBlock->isCleared = 1;
 }
 
@@ -263,7 +281,7 @@ void clearBlock(GameElement* gameBlock, int* contGame, int* won) {
  * ----------------------------------------------------------
  */
 void flagBlock(GameElement* gameBlock, int* flagct) {
-    gameBlock->isFlagged = 1;
+    gameBlock->isFlagged = !(gameBlock->isFlagged);
     if (gameBlock->isMine)
-        ++flagct;
+        ++(*flagct);
 }
