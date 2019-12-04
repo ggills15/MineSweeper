@@ -15,6 +15,8 @@
  * ----------------------------------------------------------
  */
 void printGame(GameElement game[X_DIM][Y_DIM]) {
+    system("clear");    //clears the screen each play
+
     printf("     ");
     for(int i = 0; i < X_DIM; ++i)  //prints coordinates on top
         printf("%2d  ", i);

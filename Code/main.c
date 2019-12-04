@@ -4,6 +4,7 @@
  * Section: M6/7 LtCol Chiaramonte
  * Project: MineSweeper - Final Project
  * Documentation Statement: referenced stackoverflow.com to figure out how to set a running timer in C
+ *                          and how to clear the screen using system("clear")
  * ==============================================================
 */
 
@@ -29,7 +30,8 @@ int main(void) {
 
         if(action == 'c') {         //does respective action for user input
             clearBlock(&game[xco][yco], &continue_game, &won);
-            clearSafeBlocks(game, xco, yco);
+            if(!game[xco][yco].amountTouching)
+                clearSafeBlocks(game, xco, yco);
         }
         else if(action == 'f')
             flagBlock(&game[xco][yco], &flaggedMines);
