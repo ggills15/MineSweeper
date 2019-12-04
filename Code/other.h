@@ -14,7 +14,7 @@
 #include <time.h>
 
 
-#define X_DIM 8
+#define X_DIM 8     //can be adjusted based on desired level of play
 #define Y_DIM 8
 #define NUM_MINES 10
 

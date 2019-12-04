@@ -11,7 +11,7 @@
 #include "other.h"
 
 int main(void) {
-    srand(time(0));
+    srand(time(0)); //seeds the rand() function so the game board is different each time
     int continue_game = 1;
     time_t startTime, endTime;
     int xco, yco;
@@ -22,11 +22,12 @@ int main(void) {
     GameElement game[X_DIM][Y_DIM];
     createGame(game);
 
-    startTime = time(NULL);
+    startTime = time(NULL);     //starts the timer by recording time that game is started
     while(continue_game) {
         printGame(game);
         getUserInput(&xco, &yco, &action);
-        if(action == 'c') {
+
+        if(action == 'c') {         //does respective action for user input
             clearBlock(&game[xco][yco], &continue_game, &won);
             clearSafeBlocks(game, xco, yco);
         }
@@ -34,12 +35,13 @@ int main(void) {
             flagBlock(&game[xco][yco], &flaggedMines);
         else
             printf("Invalid input.\n");
-        if(flaggedMines == NUM_MINES) {
+
+        if(flaggedMines == NUM_MINES) {     //ends the game and signals a win if all mines are flagged
             won = 1;
             continue_game = 0;
         }
     }
-    endTime = time(NULL);
+    endTime = time(NULL);       //end timer by recording time game is finished
 
     if(won)
         printWinningMessage(endTime-startTime);

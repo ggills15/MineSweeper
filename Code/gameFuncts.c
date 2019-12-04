@@ -16,7 +16,7 @@
  */
 void printGame(GameElement game[X_DIM][Y_DIM]) {
     printf("     ");
-    for(int i = 0; i < X_DIM; ++i)
+    for(int i = 0; i < X_DIM; ++i)  //prints coordinates on top
         printf("%2d  ", i);
     printf("\n    --");
     for(int i= 0; i < X_DIM; ++i)
@@ -27,7 +27,7 @@ void printGame(GameElement game[X_DIM][Y_DIM]) {
         printf("%2d | ", i);
         for(int j = 0; j < Y_DIM; ++j) {
             if(game[i][j].isCleared)
-                printf("|%d| ", game[i][j].amountTouching);
+                printf("|%d| ", game[i][j].amountTouching);     //prints each game tile
             else if(game[i][j].isFlagged)
                 printf("|!| ");
             else
@@ -37,7 +37,7 @@ void printGame(GameElement game[X_DIM][Y_DIM]) {
     }
 
     printf("    --");
-    for(int i= 0; i < X_DIM; ++i)
+    for(int i= 0; i < X_DIM; ++i)       //prints a line at the bottom of the board
         printf("----");
     printf("\n");
 }
@@ -66,7 +66,7 @@ void initializeGame(GameElement game[][Y_DIM]) {
     for(int i = 0; i < X_DIM; ++i) {
         for(int j = 0; j < Y_DIM; ++j) {
             game[i][j].isMine = 0;
-            game[i][j].isFlagged = 0;
+            game[i][j].isFlagged = 0;       //sets each element in the struct to zero (or false)
             game[i][j].isCleared = 0;
             game[i][j].amountTouching = 0;
         }
@@ -85,9 +85,9 @@ void setMines(GameElement game[][Y_DIM], int numMines) {
     int x,y;
 
     for(int i = 0; i < numMines; ++i) {
-        x = rand() % X_DIM;
+        x = rand() % X_DIM;     //sets mines at a random location
         y = rand() % Y_DIM;
-        if(game[x][y].isMine)
+        if(game[x][y].isMine)   //ensures two mines arent placed in the same location
             --i;
         else
             game[x][y].isMine = 1;
@@ -107,8 +107,8 @@ void setMines(GameElement game[][Y_DIM], int numMines) {
 int countTouchingMines(GameElement game[X_DIM][Y_DIM], int xVal, int yVal) {
     int count = 0;
 
-    if(game[xVal - 1][yVal - 1].isMine && (xVal - 1) >= 0 && (yVal - 1) >= 0)
-        ++count;
+    if(game[xVal - 1][yVal - 1].isMine && (xVal - 1) >= 0 && (yVal - 1) >= 0)   //the various if statements ensure that an
+        ++count;                                                                //out of bounds tile isnt read
     if(game[xVal - 1][yVal].isMine && (xVal - 1) >= 0)
         ++count;
     if(game[xVal - 1][yVal + 1].isMine && (xVal - 1) >= 0 && (yVal + 1) < Y_DIM)
@@ -153,7 +153,7 @@ void setMinesTouching(GameElement game[X_DIM][Y_DIM]) {
  */
 void getUserInput(int* xco, int* yco, char* act) {
     printf("Actions: clear (c), or flag (f)\n");
-    printf("Enter a vertical coordinate, horizontal coordinate, and action seperated by spaces:\n");
+    printf("Enter a vertical coordinate, horizontal coordinate, and action separated by spaces:\n");
     scanf("%d %d  %c", yco, xco, act);
 }
 
@@ -166,7 +166,7 @@ void getUserInput(int* xco, int* yco, char* act) {
 void printLosingMessage() {
     printf("BOOM!\nYou hit a mine and died!\n");
     printf("\"Landmines have taken my sight, taken my speech, taken my hearing,\ntaken my arms, taken my legs, taken my soul...\"\n- James Hetfield\n");
-    printf("\nYou lose\n");
+    printf("\nYou lose\n");     //the above quote is from the amazing song One by Metallica
 }
 
 
