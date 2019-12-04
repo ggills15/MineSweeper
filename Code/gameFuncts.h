@@ -1,25 +1,15 @@
-//
-// Created by C22Grady.Gills on 11/5/2019.
-//
+/** gameFuncts.h
+ * ==============================================================
+ * Name: Grady Gills, 12/05/2019
+ * Section: M6/7 LtCol Chiaramonte
+ * Project: MineSweeper - Final Project
+ * ==============================================================
+*/
 
 #ifndef MINESWEEPER_GAMEFUNCTS_H
 #define MINESWEEPER_GAMEFUNCTS_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-
-#define X_DIM 8
-#define Y_DIM 8
-#define NUM_MINES 10
-
-typedef struct GameElement_struct {
-    int isMine;
-    int isFlagged;
-    int isCleared;
-    int amountTouching;
-}GameElement;
+#include "other.h"
 
 /** ----------------------------------------------------------
  * @fn printGame()
@@ -117,5 +107,34 @@ void clearBlock(GameElement* gameBlock, int* contGame, int* won);
  * ----------------------------------------------------------
  */
 void flagBlock(GameElement* gameBlock, int* flagct);
+
+
+/** ----------------------------------------------------------
+ * @fn printMinSec
+ * @brief prints a time in minutes and seconds
+ * @param t, time in seconds
+ * ----------------------------------------------------------
+ */
+void printMinSec(long t);
+
+
+/** ----------------------------------------------------------
+ * @fn clearSafeBlocks()
+ * @brief clears blocks that arent touching blocks that are touching mines
+ * @param game, game matrix
+ * @param xVal, x coordinate of block in question
+ * @param yVal, y coordinate of block in question
+ * ----------------------------------------------------------
+ */
+void clearSafeBlocks(GameElement game[X_DIM][Y_DIM], int xVal, int yVal);
+
+
+/** ----------------------------------------------------------
+ * @fn printWinningMessage()
+ * @brief prints a message telling the player they won the game
+ * @param timePlayed, the time it took to win the game, in seconds
+ * ----------------------------------------------------------
+ */
+void printWinningMessage(int timePlayed);
 
 #endif //MINESWEEPER_GAMEFUNCTS_H

@@ -19,8 +19,7 @@ set(SOURCE_FILES
         ${SDIR}main.c
         ${SDIR}gameFuncts.c
         ${SDIR}gameFuncts.h
-        #${SDIR}lab33.c
-        #${SDIR}lab33.h
+        ${SDIR}other.h
         )
 
 # Tell cmake the name of your executable and what source files to

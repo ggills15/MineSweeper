@@ -1,8 +1,14 @@
-//
-// Created by C22Grady.Gills on 11/5/2019.
-//
+/** main.c
+ * ==============================================================
+ * Name: Grady Gills, 12/05/2019
+ * Section: M6/7 LtCol Chiaramonte
+ * Project: MineSweeper - Final Project
+ * Documentation Statement: referenced stackoverflow.com to figure out how to set a running timer in C
+ * ==============================================================
+*/
 
 #include "gameFuncts.h"
+#include "other.h"
 
 int main(void) {
     srand(time(0));
@@ -20,10 +26,14 @@ int main(void) {
     while(continue_game) {
         printGame(game);
         getUserInput(&xco, &yco, &action);
-        if(action == 'c')
+        if(action == 'c') {
             clearBlock(&game[xco][yco], &continue_game, &won);
-        else //if(action == 'f')
+            clearSafeBlocks(game, xco, yco);
+        }
+        else if(action == 'f')
             flagBlock(&game[xco][yco], &flaggedMines);
+        else
+            printf("Invalid input.\n");
         if(flaggedMines == NUM_MINES) {
             won = 1;
             continue_game = 0;
@@ -31,10 +41,10 @@ int main(void) {
     }
     endTime = time(NULL);
 
-    if(won) {
-        printf("Time completed: %ld s", endTime - startTime);
-
-    } else printLosingMessage();
+    if(won)
+        printWinningMessage(endTime-startTime);
+    else
+        printLosingMessage();
 
     return 0;
 }

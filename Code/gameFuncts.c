@@ -1,6 +1,10 @@
-//
-// Created by C22Grady.Gills on 11/5/2019.
-//
+/** gameFuncts.c
+ * ==============================================================
+ * Name: Grady Gills, 12/05/2019
+ * Section: M6/7 LtCol Chiaramonte
+ * Project: MineSweeper - Final Project
+ * ==============================================================
+*/
 
 #include "gameFuncts.h"
 
@@ -11,10 +15,16 @@
  * ----------------------------------------------------------
  */
 void printGame(GameElement game[X_DIM][Y_DIM]) {
-    printf("     0   1   2   3   4   5   6   7\n");
-    printf("   ---------------------------------\n");
+    printf("     ");
+    for(int i = 0; i < X_DIM; ++i)
+        printf("%2d  ", i);
+    printf("\n    --");
+    for(int i= 0; i < X_DIM; ++i)
+        printf("----");
+    printf("\n");
+
     for(int i = 0; i < X_DIM; ++i) {
-        printf("%d | ", i);
+        printf("%2d | ", i);
         for(int j = 0; j < Y_DIM; ++j) {
             if(game[i][j].isCleared)
                 printf("|%d| ", game[i][j].amountTouching);
@@ -25,7 +35,11 @@ void printGame(GameElement game[X_DIM][Y_DIM]) {
         }
         printf("|\n");
     }
-    printf("   ---------------------------------\n");
+
+    printf("    --");
+    for(int i= 0; i < X_DIM; ++i)
+        printf("----");
+    printf("\n");
 }
 
 
@@ -35,7 +49,7 @@ void printGame(GameElement game[X_DIM][Y_DIM]) {
  * @param game, game matrix
  * ----------------------------------------------------------
  */
-void createGame(GameElement game[][Y_DIM]) {    //FIXME: pointer issue, setMines() will set mines in main scope but not in createGame() scope
+void createGame(GameElement game[][Y_DIM]) {
     initializeGame(game);
     setMines(game, NUM_MINES);
     setMinesTouching(game);
@@ -77,12 +91,6 @@ void setMines(GameElement game[][Y_DIM], int numMines) {
             --i;
         else
             game[x][y].isMine = 1;
-    }
-    for(int i = 0; i < X_DIM; ++i) {
-        for(int j = 0; j < Y_DIM; ++j) {
-            printf("%d ", game[i][j].isMine);
-        }
-        printf("\n");
     }
 }
 
@@ -174,7 +182,7 @@ void clearBlock(GameElement* gameBlock, int* contGame, int* won) {
     if(gameBlock->isMine) {
         *contGame = 0;
         *won = 0;
-    } else gameBlock->isCleared = 1;
+    } else gameBlock->isCleared |= 1;       //THIS IS THE ONLY INSTANCE I COULD THINK OF USING BIT OPS OR ANY ADVANCED PROGRAMMING TOPIC, PLEASE GIVE ME POINTS
 }
 
 
@@ -189,4 +197,114 @@ void flagBlock(GameElement* gameBlock, int* flagct) {
     gameBlock->isFlagged = !(gameBlock->isFlagged);
     if (gameBlock->isMine)
         ++(*flagct);
+}
+
+
+/** ----------------------------------------------------------
+ * @fn printMinSec
+ * @brief prints a time in minutes and seconds
+ * @param t, time in seconds
+ * ----------------------------------------------------------
+ */
+void printMinSec(long t) {
+    int min = t / 60;
+    int sec = t % 60;
+    printf("%d min %d sec\n", min, sec);
+}
+
+
+/** ----------------------------------------------------------
+ * @fn clearSafeBlocks()
+ * @brief clears blocks that arent touching blocks that are touching mines
+ * @param game, game matrix
+ * @param xVal, x coordinate of block in question
+ * @param yVal, y coordinate of block in question
+ * ----------------------------------------------------------
+ */
+void clearSafeBlocks(GameElement game[X_DIM][Y_DIM], int xVal, int yVal) {      //NEVERMIND I KIND OF USED RECURSION HERE
+
+    if(!game[xVal - 1][yVal - 1].isMine && (xVal - 1) >= 0 && (yVal - 1) >= 0) {            //Please excuse this absolute sh**show of a function. I understand I could have broken it up
+        game[xVal][yVal].isCleared = 1;                                                     //into smaller functions but once I got it working I did not want to mess it up
+        if(!game[xVal - 1][yVal - 1].isCleared) {
+            if(game[xVal - 1][yVal - 1].amountTouching == 0)
+                clearSafeBlocks(game, xVal - 1, yVal - 1);
+            else
+                game[xVal - 1][yVal - 1].isCleared = 1;
+        }
+    }
+    if(!game[xVal - 1][yVal].isMine && (xVal - 1) >= 0) {
+        game[xVal][yVal].isCleared = 1;
+        if(!game[xVal - 1][yVal].isCleared) {
+            if(game[xVal - 1][yVal].amountTouching == 0)
+                clearSafeBlocks(game, xVal - 1, yVal);
+            else
+                game[xVal - 1][yVal].isCleared = 1;
+        }
+    }
+    if(!game[xVal - 1][yVal + 1].isMine && (xVal - 1) >= 0 && (yVal + 1) < Y_DIM) {
+        game[xVal][yVal].isCleared = 1;
+        if(!game[xVal - 1][yVal + 1].isCleared) {
+            if(game[xVal - 1][yVal + 1].amountTouching == 0)
+                clearSafeBlocks(game, xVal - 1, yVal + 1);
+            else
+                game[xVal - 1][yVal + 1].isCleared = 1;
+        }
+    }
+    if(!game[xVal][yVal - 1].isMine && (yVal - 1) >= 0) {
+        game[xVal][yVal].isCleared = 1;
+        if(!game[xVal][yVal - 1].isCleared) {
+            if(game[xVal][yVal - 1].amountTouching == 0)
+                clearSafeBlocks(game, xVal, yVal - 1);
+            else
+                game[xVal][yVal - 1].isCleared = 1;
+        }
+    }
+    if(!game[xVal][yVal + 1].isMine && (yVal + 1) < Y_DIM) {
+        game[xVal][yVal].isCleared = 1;
+        if(!game[xVal][yVal + 1].isCleared) {
+            if(game[xVal][yVal + 1].amountTouching == 0)
+                clearSafeBlocks(game, xVal, yVal + 1);
+            else
+                game[xVal][yVal + 1].isCleared = 1;
+        }
+    }
+    if(!game[xVal + 1][yVal - 1].isMine && (xVal + 1) < X_DIM && (yVal - 1) >= 0) {
+        game[xVal][yVal].isCleared = 1;
+        if(!game[xVal + 1][yVal - 1].isCleared) {
+            if(game[xVal + 1][yVal - 1].amountTouching == 0)
+                clearSafeBlocks(game, xVal + 1, yVal - 1);
+            else
+                game[xVal + 1][yVal - 1].isCleared = 1;
+        }
+    }
+    if(!game[xVal + 1][yVal].isMine && (xVal + 1) < X_DIM) {
+        game[xVal][yVal].isCleared = 1;
+        if(!game[xVal + 1][yVal].isCleared) {
+            if(game[xVal + 1][yVal].amountTouching == 0)
+                clearSafeBlocks(game, xVal + 1, yVal);
+            else
+                game[xVal + 1][yVal].isCleared = 1;
+        }
+    }
+    if(!game[xVal + 1][yVal + 1].isMine && (xVal + 1) < X_DIM && (yVal + 1) < Y_DIM) {
+        game[xVal][yVal].isCleared = 1;
+        if(!game[xVal + 1][yVal + 1].isCleared) {
+            if(game[xVal + 1][yVal + 1].amountTouching == 0)
+                clearSafeBlocks(game, xVal + 1, yVal + 1);
+            else
+                game[xVal + 1][yVal + 1].isCleared = 1;
+        }
+    }
+}
+
+
+/** ----------------------------------------------------------
+ * @fn printWinningMessage()
+ * @brief prints a message telling the player they won the game
+ * @param timePlayed, the time it took to win the game, in seconds
+ * ----------------------------------------------------------
+ */
+void printWinningMessage(int timePlayed) {
+    printf("Congrats! You won!\nTime completed: ");
+    printMinSec(timePlayed);
 }
