@@ -3,8 +3,9 @@
  * Name: Grady Gills, 12/05/2019
  * Section: M6/7 LtCol Chiaramonte
  * Project: MineSweeper - Final Project
- * Documentation Statement: referenced stackoverflow.com to figure out how to set a running timer in C
- *                          and how to clear the screen using system("clear")
+ * Documentation Statement: referenced stackoverflow.com to figure out how to set a running timer in C,
+ *                          how to clear the screen using system("clear"),
+ *                          and how to pause program until key is pressed using getchar()
  * ==============================================================
 */
 
@@ -49,6 +50,10 @@ int main(void) {
         printWinningMessage(endTime-startTime);
     else
         printLosingMessage();
+
+    printf("\n\nPress ENTER to exit...\n");
+    while ((getchar()) != '\n');
+    getchar();
 
     return 0;
 }
