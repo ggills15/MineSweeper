@@ -166,7 +166,7 @@ void getUserInput(int* xco, int* yco, char* act) {
  * ----------------------------------------------------------
  */
 void printLosingMessage() {
-    printf("BOOM!\nYou hit a mine and died!\n");
+    printf("\nBOOM!\nYou hit a mine and died!\n");
     printf("\"Landmines have taken my sight, taken my speech, taken my hearing,\ntaken my arms, taken my legs, taken my soul...\"\n- James Hetfield\n");
     printf("\nYou lose\n");     //the above quote is from the amazing song One by Metallica
 }
@@ -307,6 +307,6 @@ void clearSafeBlocks(GameElement game[X_DIM][Y_DIM], int xVal, int yVal) {      
  * ----------------------------------------------------------
  */
 void printWinningMessage(int timePlayed) {
-    printf("Congrats! You won!\nTime completed: ");
+    printf("\nCongrats! You won!\nTime completed: ");
     printMinSec(timePlayed);
 }
